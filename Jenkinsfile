@@ -1,8 +1,6 @@
 
 import java.text.*
-def Version = null
-def FileName = null
-
+def packageName = null
 // Build Properties (num builds to keep, polling, blocking, etc)
 properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '30', artifactNumToKeepStr: '5', daysToKeepStr: '30', numToKeepStr: '5'))])
 
@@ -17,11 +15,12 @@ try
                 def dateFormat = new SimpleDateFormat("yyyy.MM.dd")
                 def date = new Date()
                 def dateString = dateFormat.format(date)
-                def versionString = BRANCH_NAME+"."+BUILD_NUMBER
+                versionString = BRANCH_NAME+"."+BUILD_NUMBER
                 currentBuild.displayName = versionString
+                packageName=versionString
             }
             
-            stage('check out')
+            stage('Check Out')
             {
                 deleteDir()
                 checkout scm
@@ -38,7 +37,8 @@ try
             
             stage('Zip Artifacts')
             {
-               zip archive: true, dir: 'HelpdeskMVC/obj/Release/', zipFile: 'publish.zip'
+                
+               zip archive: true, dir: 'HelpdeskMVC/obj/Release/', zipFile: packageName+".zip"
           
             }
 
