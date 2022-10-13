@@ -1,0 +1,18 @@
+node("master")
+{
+     stage('Set Version')
+    {   
+        def dateFormat = new SimpleDateFormat("yyyy.MM.dd")
+        def date = new Date()
+        def dateString = dateFormat.format(date)
+        versionString = BUILD_NUMBER
+        currentBuild.displayName = versionString
+        packageName=versionString
+    }
+    stage('Check Out')
+    {
+        deleteDir()
+        checkout scm
+    }
+            
+}
