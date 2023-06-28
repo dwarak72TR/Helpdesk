@@ -14,14 +14,16 @@ jobs:
 
     steps:
      - name: Set Date
+       id: version
        run: |
           $dateString = Get-Date -Format "yyyy.MM.dd"
-          echo "dateString=$dateString"
-          echo "::set-env name=DATE_STRING::$dateString"
+          echo "version=$dateString.${{ env.BUILD_NUMBER }}" >> $GITHUB_ENV
+       env:
+          GITHUB_ENV: env.list
 
      - name: Use Date
        run: |
-          echo "Date: ${{ env.DATE_STRING }}"
+          echo "Version: ${{ env.version }}"
 
      - name: Use Date, Build Number, and Branch Name
        run: |
