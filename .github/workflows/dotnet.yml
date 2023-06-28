@@ -13,17 +13,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-     - name: Set Date
-       id: version
+     - name: Set Version
+       run: echo "version=1.0.0" >> $GITHUB_ENV
+       
+     - name: Use Version
        run: |
-          $dateString = Get-Date -Format "yyyy.MM.dd"
-          echo "version=$dateString.${{ env.BUILD_NUMBER }}" >> $GITHUB_ENV
-       env:
-          GITHUB_ENV: env.list
-
-     - name: Use Date
-       run: |
-          echo "Version: ${{ env.version }}"
+          echo "Version: ${{ env.VERSION }}"
 
      - name: Use Date, Build Number, and Branch Name
        run: |
