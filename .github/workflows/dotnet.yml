@@ -1,0 +1,32 @@
+name: Your Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DATE_STRING: ${{ steps.set_date.outputs.dateString }}
+  BUILD_NUMBER: ${{ github.run_number }}
+  BRANCH_NAME: ${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Set Date
+        id: set_date
+        run: |
+          echo "dateString=$(Get-Date -Format 'yyyy.MM.dd')" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      # Your other steps in the workflow that use the environment variables
+      # ...
+
+      - name: Use Date, Build Number, and Branch Name
+        run: |
+          echo "Date: $env:DATE_STRING"
+          echo "Build Number: $env:BUILD_NUMBER"
+          echo "Branch Name: $env:BRANCH_NAME"
+        shell: pwsh
