@@ -6,7 +6,7 @@ on:
       - dev
 
 env:
-  DATE_STRING: ${{ steps.set_date.outputs.dateString }}
+  DATE_STRING: ''
   BUILD_NUMBER: ${{ github.run_number }}
   BRANCH_NAME: ${{ github.ref }}
 
@@ -18,8 +18,10 @@ jobs:
       - name: Set Date
         id: set_date
         run: |
-          echo "dateString=$(Get-Date -Format 'yyyy.MM.dd')" >> $env:GITHUB_ENV
+          echo "dateString=$(Get-Date -Format 'yyyy.MM.dd')"
         shell: pwsh
+        env:
+          DATE_STRING: ${{ steps.set_date.outputs.dateString }}
 
       # Your other steps in the workflow that use the environment variables
       # ...
