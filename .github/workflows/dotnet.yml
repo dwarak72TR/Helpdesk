@@ -7,7 +7,7 @@ on:
 
 env:
   BUILD_NUMBER: ${{ github.run_number }}
-  BRANCH_NAME: ${{ github.ref_name }}
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
 jobs:
   build:
     runs-on: windows-latest
