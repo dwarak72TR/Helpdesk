@@ -7,7 +7,7 @@ on:
 
 env:
   BUILD_NUMBER: ${{ github.run_number }}
-  BRANCH_NAME: ${{ GITHUB_REF#refs/heads/ }}
+  BRANCH_NAME: ${{ github.ref.replace('refs/heads/', '') }}
 jobs:
   build:
     runs-on: windows-latest
@@ -16,7 +16,6 @@ jobs:
       - name: Set Version
         run: |
           echo "DATE_STRING=$(Get-Date -Format 'yyyy.MM.dd')" >> $GITHUB_ENV
-          echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
         env:
           GITHUB_ENV: env.list   
 
@@ -25,7 +24,5 @@ jobs:
 
       - name: Use Date, Build Number, and Branch Name
         run: |
-          echo "Build Number: env.BUILD_NUMBER"
-          echo "Date: env.DATE_STRING"
-          echo "Branch Name: env.BRANCH_NAME"
+          echo "${{ env.BRANCH_NAME }}_${{ env.BUILD_NUMBER }}"
         shell: pwsh
