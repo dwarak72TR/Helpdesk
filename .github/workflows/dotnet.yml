@@ -6,22 +6,18 @@ on:
       - dev
 
 env:
-  DATE_STRING: ''
   BUILD_NUMBER: ${{ github.run_number }}
-  BRANCH_NAME: ${{ github.ref }}
-
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Set Date
-        id: set_date
+      - name: Set Version
         run: |
-          echo "dateString=$(Get-Date -Format 'yyyy.MM.dd')"
-        shell: pwsh
+          echo "DATE_STRING=$(Get-Date -Format 'yyyy.MM.dd')" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
         env:
-          DATE_STRING: ${{ steps.set_date.outputs.dateString }}
+          GITHUB_ENV: env.list   
 
       # Your other steps in the workflow that use the environment variables
       # ...
