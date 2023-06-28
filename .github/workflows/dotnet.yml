@@ -18,8 +18,11 @@ jobs:
         run: |
           $dateString = Get-Date -Format "yyyy.MM.dd"
           echo "dateString=$dateString"
+          
       - name: Print date
-        run: echo "${{ steps.set_date.outputs.dateString }}"
+        run: echo $DEBUG
+        env:
+          DEBUG: ${{ steps.set_date.outputs.dateString }}"
        
 
       - name: Use Date
