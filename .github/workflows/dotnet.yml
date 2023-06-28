@@ -7,7 +7,7 @@ on:
 
 env:
   BUILD_NUMBER: ${{ github.run_number }}
-  BRANCH_NAME: ${{ github.ref##*/ }} #${{ github.head_ref || github.ref_name }} 
+  BRANCH_NAME: ${{ github.ref_name }} #${{ github.head_ref || github.ref_name }} 
 jobs:
   build:
     runs-on: windows-latest
@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Set Version
         run: |
-          echo "DATE_STRING=$(Get-Date -Format 'yyyy.MM.dd')" >> $GITHUB_ENV
+          echo "currentDT=$(date +'%Y-%m-%dZ%H-%M-%S')" >> $GITHUB_ENV
         env:
           GITHUB_ENV: env.list   
 
@@ -25,4 +25,5 @@ jobs:
       - name: Use Date, Build Number, and Branch Name
         run: |
           echo "${{ env.BRANCH_NAME }}_${{ env.BUILD_NUMBER }}"
+          echo "${{ env.currentDT }}"
         shell: pwsh
