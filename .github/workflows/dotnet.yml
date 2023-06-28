@@ -3,7 +3,7 @@ name: Your Workflow
 on:
   push:
     branches:
-      - main
+      - dev
 
 env:
   DATE_STRING: ${{ steps.set_date.outputs.dateString }}
