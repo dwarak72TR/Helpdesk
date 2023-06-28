@@ -13,17 +13,18 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Set Version
-        run: |
-          echo "currentDT=$(date +'%Y-%m-%dZ%H-%M-%S')" >> $GITHUB_ENV
-        env:
-          GITHUB_ENV: env.list   
+     - name: "Set current date as env variable"
+       run: |
+          echo "dateString=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+       id: version  # this is used on variable path
 
       # Your other steps in the workflow that use the environment variables
       # ...
 
-      - name: Use Date, Build Number, and Branch Name
-        run: |
+     - name: Use Date, Build Number, and Branch Name
+       run: |
           echo "${{ env.BRANCH_NAME }}_${{ env.BUILD_NUMBER }}"
-          echo "${{ env.currentDT }}"
-        shell: pwsh
+          echo "${{ env.DEBUG }}"
+       shell: pwsh
+       env:
+          DEBUG: ${{ steps.version.outputs.builddate }}-DEBUG
