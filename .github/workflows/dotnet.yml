@@ -18,7 +18,9 @@ jobs:
         run: |
           $dateString = Get-Date -Format "yyyy.MM.dd"
           echo "dateString=$dateString"
-          echo "##vso[task.setvariable variable=DATE_STRING]$dateString"
+      - name: Print date
+        run: echo "${{ steps.set_date.outputs.dateString }}"
+       
 
       - name: Use Date
         run: |
