@@ -13,12 +13,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-     - name: Set Version
-       run: echo "version=1.0.0" >> $GITHUB_ENV
-       
-     - name: Use Version
-       run: |
-          echo "Version: ${{ env.VERSION }}"
+      - name: Set Date
+        id: set_date
+        run: |
+          $dateString = Get-Date -Format "yyyy.MM.dd"
+          echo "dateString=$dateString"
+          echo "##vso[task.setvariable variable=DATE_STRING]$dateString"
+
+      - name: Use Date
+        run: |
+          echo "Date: $env:DATE_STRING"
 
      - name: Use Date, Build Number, and Branch Name
        run: |
