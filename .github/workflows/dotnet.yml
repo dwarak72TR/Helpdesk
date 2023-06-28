@@ -23,7 +23,3 @@ jobs:
       - name: Use Date
         run: |
           echo "Date: $env:DATE_STRING"
-
-     - name: Use Date, Build Number, and Branch Name
-       run: |
-          echo "${{ env.BRANCH_NAME }}_${{ env.BUILD_NUMBER }}"
